@@ -25,12 +25,12 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
+  MyHomePageState createState() {
+    return MyHomePageState();
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   String numericGrade = '';
   String letterGrade = '';
 
