@@ -1,6 +1,6 @@
 class GradeConverter {
   String convertToLetterGrade(double numericGrade) {
-    if (numericGrade >= 90) {
+    if (numericGrade >= 90 && numericGrade <= 100) {
       return 'A';
     } else if (numericGrade >= 80) {
       return 'B';
