@@ -1,35 +1,96 @@
-import 'package:test/test.dart';
+import 'package:flutter/material.dart';
 
-import 'grade_converter.dart';
+import 'grade_converter.dart'; // Import your GradeConverter class
 
 void main() {
-  test('Converts 95 to A', () {
-    final gradeConverter = GradeConverter();
-    final letterGrade = gradeConverter.convertToLetterGrade(95);
-    expect(letterGrade, 'A');
-  });
+  runApp(const MyApp());
+}
 
-  test('Converts 85 to B', () {
-    final gradeConverter = GradeConverter();
-    final letterGrade = gradeConverter.convertToLetterGrade(85);
-    expect(letterGrade, 'B');
-  });
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  test('Converts 75 to C', () {
-    final gradeConverter = GradeConverter();
-    final letterGrade = gradeConverter.convertToLetterGrade(75);
-    expect(letterGrade, 'C');
-  });
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'GradeTool Web UI',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
 
-  test('Converts 65 to D', () {
-    final gradeConverter = GradeConverter();
-    final letterGrade = gradeConverter.convertToLetterGrade(65);
-    expect(letterGrade, 'D');
-  });
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-  test('Converts 55 to F', () {
+  @override
+  _MyHomePageState createState() {
+    return _MyHomePageState();
+  }
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String numericGrade = '';
+  String letterGrade = '';
+
+  void convertGrade() {
     final gradeConverter = GradeConverter();
-    final letterGrade = gradeConverter.convertToLetterGrade(55);
-    expect(letterGrade, 'F');
-  });
+    final grade = double.tryParse(numericGrade);
+
+    if (grade != null) {
+      setState(() {
+        letterGrade = gradeConverter.convertToLetterGrade(grade);
+      });
+    } else {
+      setState(() {
+        letterGrade = 'Invalid Input';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('GradeTool Web UI'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Enter Numeric Grade:',
+              style: TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 100,
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    numericGrade = value;
+                  });
+                },
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: convertGrade,
+              child: const Text('Convert'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Letter Grade: $letterGrade',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
